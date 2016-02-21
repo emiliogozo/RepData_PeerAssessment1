@@ -39,11 +39,14 @@ paste0("Maximum average steps at ",avgsteps$interval[which.max(avgsteps$steps)],
 
 
 ## Imputing missing values
+#### **Srategy:** Missing values for each 5-minute interval will be replaced by the mean of that 5-minute interval.
+
 ```{r}
 library(plyr)
 
 paste0("Number of missing values is  ",sum(is.na(dat$steps)), " out of ", length(dat$steps), " data")
 
+## Use the mean of the 5-minute interval as a replacement for the missing value
 dat2 <- ddply(dat,~interval,transform,steps.imputedna=replace(steps,is.na(steps),mean(steps,na.rm=T)))
 
 summary(dat2[,c(1,4)])

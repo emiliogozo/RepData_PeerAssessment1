@@ -96,11 +96,14 @@ plot(steps~interval,avgsteps,type=&quot;l&quot;)</code></pre>
 </div>
 <div id="imputing-missing-values" class="section level2">
 <h2>Imputing missing values</h2>
+<div id="srategy-missing-values-for-each-5-minute-interval-will-be-replaced-by-the-mean-of-that-5-minute-interval." class="section level4">
+<h4><strong>Srategy:</strong> Missing values for each 5-minute interval will be replaced by the mean of that 5-minute interval.</h4>
 <pre class="r"><code>library(plyr)
 
 paste0(&quot;Number of missing values is  &quot;,sum(is.na(dat$steps)), &quot; out of &quot;, length(dat$steps), &quot; data&quot;)</code></pre>
 <pre><code>## [1] &quot;Number of missing values is  2304 out of 17568 data&quot;</code></pre>
-<pre class="r"><code>dat2 &lt;- ddply(dat,~interval,transform,steps.imputedna=replace(steps,is.na(steps),mean(steps,na.rm=T)))
+<pre class="r"><code>## Use the mean of the 5-minute interval as a replacement for the missing value
+dat2 &lt;- ddply(dat,~interval,transform,steps.imputedna=replace(steps,is.na(steps),mean(steps,na.rm=T)))
 
 summary(dat2[,c(1,4)])</code></pre>
 <pre><code>##      steps        steps.imputedna 
@@ -124,6 +127,7 @@ legend(&quot;topleft&quot;,c(&quot;mean&quot;,&quot;median&quot;), lwd=c(1,1),co
 <pre><code>## [1] &quot;New Mean:   10766.1886792453&quot;</code></pre>
 <pre class="r"><code>paste0(&quot;New Median: &quot;,mdnspd2)</code></pre>
 <pre><code>## [1] &quot;New Median: 10765&quot;</code></pre>
+</div>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
